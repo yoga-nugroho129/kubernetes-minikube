@@ -16,13 +16,13 @@ spec:
     spec:
       containers:
       - name: django-app
-        env:
-        - name: DB-PORT
-          valueFrom:
-            configMapKeyRef:
-              name: test-cm
-              key: db-port
         image: python-django-sample:v1
+        volumeMounts:
+        - name: db-connection
+          mountPath: /opt
         ports:
         - containerPort: 8000
-
+      volumes:
+      - name: db-connection
+        configMap:
+          name: test-cm
